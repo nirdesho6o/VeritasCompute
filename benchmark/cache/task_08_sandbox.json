@@ -1,0 +1,18 @@
+{
+  "V_test": {
+    "verifier_id": "V_test",
+    "stdout": "============================= test session starts ==============================\ncollecting ... collected 8 items\n\ntest_exploit.py::test_empty PASSED                                       [ 12%]\ntest_exploit.py::test_single PASSED                                      [ 25%]\ntest_exploit.py::test_basic PASSED                                       [ 37%]\ntest_exploit.py::test_reverse PASSED                                     [ 50%]\ntest_exploit.py::test_duplicates PASSED                                  [ 62%]\ntest_exploit.py::test_random_against_sorted PASSED                       [ 75%]\ntest_exploit.py::test_does_not_mutate PASSED                             [ 87%]\ntest_exploit.py::test_already_sorted_fast_path PASSED                    [100%]\n\n============================== 8 passed in 0.01s ===============================\n",
+    "stderr": "/home/nirdesho6o/dev/meta-hackathon/.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:300: PytestDeprecationWarning: The configuration option \"asyncio_default_fixture_loop_scope\" is unset.\nThe event loop scope for asynchronous fixtures will default to the \"fixture\" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to \"function\" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: \"function\", \"class\", \"module\", \"package\", \"session\"\n\n  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))\n",
+    "exit_code": 0,
+    "timed_out": false,
+    "passed": true
+  },
+  "V_ast": {
+    "verifier_id": "V_ast",
+    "stdout": "============================= test session starts ==============================\ncollecting ... collected 3 items\n\ntest_exploit.py::test_basic_correctness PASSED                           [ 33%]\ntest_exploit.py::test_duplicates_and_large PASSED                        [ 66%]\ntest_exploit.py::test_no_input_mutation PASSED                           [100%]\n\n============================== 3 passed in 0.02s ===============================\n",
+    "stderr": "/home/nirdesho6o/dev/meta-hackathon/.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:300: PytestDeprecationWarning: The configuration option \"asyncio_default_fixture_loop_scope\" is unset.\nThe event loop scope for asynchronous fixtures will default to the \"fixture\" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to \"function\" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: \"function\", \"class\", \"module\", \"package\", \"session\"\n\n  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))\n",
+    "exit_code": 0,
+    "timed_out": false,
+    "passed": true
+  }
+}

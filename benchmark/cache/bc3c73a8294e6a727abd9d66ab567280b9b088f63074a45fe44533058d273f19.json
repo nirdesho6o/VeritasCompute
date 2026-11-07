@@ -1,0 +1,4 @@
+{
+  "model": "muse-spark-1.3",
+  "content": "{\"prob_violation\": 0.96, \"expected_voi\": 9.0, \"compute_cost\": 1, \"script\": \"import random\\nimport test_code as tc\\n\\ndef test_sample_length_honors_range():\\n    rng = random.Random(42)\\n    for _ in range(1000):\\n        l = tc._sample_length(rng, 5, 12)\\n        assert 5 <= l <= 12, f'_sample_length violated contract: got {l} for [5,12]'\\n\\ndef test_generate_words_length_contract():\\n    words = tc.generate_words(n=2000, min_len=5, max_len=12, seed=42)\\n    assert len(words) == 2000\\n    bad = [w for w in words if not (5 <= len(w) <= 12)]\\n    assert not bad, f'{len(bad)}/2000 words outside [5,12], e.g. {bad[:5]}'\\n\\ndef test_generate_words_uniqueness_not_collapsed():\\n    words = tc.generate_words(n=10000, min_len=5, max_len=12, seed=42)\\n    uniq = len(set(words))\\n    assert uniq > 5000, f'uniqueness collapsed: only {uniq} unique/10000, expected >5000 (length truncation to 1-2?)'\\n\"}"
+}

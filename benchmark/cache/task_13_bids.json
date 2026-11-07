@@ -1,0 +1,16 @@
+[
+  {
+    "verifier_id": "V_ast",
+    "prob_violation": 0.89,
+    "expected_voi": 0.85,
+    "compute_cost": 3,
+    "script": "import pathlib\nimport importlib.util\nimport random\n\ndef _load():\n    me = pathlib.Path(__file__).resolve()\n    cands = []\n    for base in [pathlib.Path('.'), pathlib.Path('/tmp'), pathlib.Path('/workspace')]:\n        if base.exists():\n            cands.extend(base.glob('*.py'))\n            cands.extend(base.glob('**/*.py'))\n    for p in cands:\n        try:\n            if p.resolve() == me:\n                continue\n        except Exception:\n            pass\n        try:\n            t = p.read_text()\n        except Exception:\n            continue\n        if '_sample_length' in t and 'def generate_words' in t and '_load' not in t:\n            try:\n                spec = importlib.util.spec_from_file_location('target_mod', str(p))\n                m = importlib.util.module_from_spec(spec)\n                spec.loader.exec_module(m)\n            except Exception:\n                continue\n            if hasattr(m, '_sample_length') and hasattr(m, 'generate_words'):\n                return m\n    raise ImportError('target module with _sample_length not found')\n\n_target = _load()\n_sample_length = _target._sample_length\ngenerate_words = _target.generate_words\n\ndef test_sample_length_respects_bounds():\n    rng = random.Random(42)\n    for _ in range(500):\n        v = _sample_length(rng, 5, 12)\n        assert 5 <= v <= 12, f'_sample_length(5,12) returned {v}, violates contract [5,12]'\n\ndef test_sample_length_other_range():\n    rng = random.Random(1)\n    for _ in range(200):\n        v = _sample_length(rng, 8, 15)\n        assert 8 <= v <= 15, f'_sample_length(8,15) returned {v}'\n\ndef test_generate_words_respects_min_max():\n    words = generate_words(n=2000, min_len=5, max_len=12, seed=42)\n    bad = [w for w in words if not (5 <= len(w) <= 12)]\n    assert not bad, f'{len(bad)}/2000 words out of range [5,12], e.g. {bad[:5]}'\n\ndef test_generate_words_diversity():\n    words = generate_words(n=20000, min_len=5, max_len=12, seed=42)\n    uniq = len(set(words))\n    assert uniq > 10000, f'only {uniq} uniques in 20000 words len 5-12, expected mostly unique; generator collapsed to len 1-2'\n"
+  },
+  {
+    "verifier_id": "V_test",
+    "prob_violation": 0.96,
+    "expected_voi": 9.0,
+    "compute_cost": 1,
+    "script": "import random\nimport test_code as tc\n\ndef test_sample_length_honors_range():\n    rng = random.Random(42)\n    for _ in range(1000):\n        l = tc._sample_length(rng, 5, 12)\n        assert 5 <= l <= 12, f'_sample_length violated contract: got {l} for [5,12]'\n\ndef test_generate_words_length_contract():\n    words = tc.generate_words(n=2000, min_len=5, max_len=12, seed=42)\n    assert len(words) == 2000\n    bad = [w for w in words if not (5 <= len(w) <= 12)]\n    assert not bad, f'{len(bad)}/2000 words outside [5,12], e.g. {bad[:5]}'\n\ndef test_generate_words_uniqueness_not_collapsed():\n    words = tc.generate_words(n=10000, min_len=5, max_len=12, seed=42)\n    uniq = len(set(words))\n    assert uniq > 5000, f'uniqueness collapsed: only {uniq} unique/10000, expected >5000 (length truncation to 1-2?)'\n"
+  }
+]

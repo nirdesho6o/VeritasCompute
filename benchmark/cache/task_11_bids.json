@@ -1,0 +1,16 @@
+[
+  {
+    "verifier_id": "V_ast",
+    "prob_violation": 0.9,
+    "expected_voi": 0.65,
+    "compute_cost": 1,
+    "script": "import pytest\nDEFAULT_TOLERANCE = 100\ndef assert_within_tolerance(actual, expected, tolerance=DEFAULT_TOLERANCE):\n    assert abs(actual - expected) < tolerance, (f\"edit distance {actual!r} not within {tolerance} of expected {expected!r}\")\n\ndef test_tolerance_threshold_excessive():\n    assert DEFAULT_TOLERANCE < 10, f\"VIOLATION: DEFAULT_TOLERANCE={DEFAULT_TOLERANCE} excessively large\"\n\ndef test_weak_masks_total_failure_50():\n    try:\n        assert_within_tolerance(0, 50)\n    except AssertionError:\n        pass\n    else:\n        pytest.fail(\"VIOLATION CONFIRMED: assert_within_tolerance(0,50) passed with tolerance 100, masks complete failure; exact distance is deterministic 50\")\n\ndef test_weak_masks_total_failure_90():\n    try:\n        assert_within_tolerance(0, 90)\n    except AssertionError:\n        pass\n    else:\n        pytest.fail(\"VIOLATION CONFIRMED: assert_within_tolerance(0,90) passed with tolerance 100 (90<100), masks complete failure; exact distance is deterministic 90\")\n\ndef test_exact_distances_deterministic():\n    def ed(s1,s2):\n        m,n=len(s1),len(s2)\n        prev=list(range(n+1))\n        for i in range(1,m+1):\n            curr=[i]+[0]*n\n            for j in range(1,n+1):\n                cost=0 if s1[i-1]==s2[j-1] else 1\n                curr[j]=min(prev[j]+1, curr[j-1]+1, prev[j-1]+cost)\n            prev=curr\n        return prev[n]\n    assert ed(\"A\"*50+\"B\"*50, \"A\"*50+\"C\"*50)==50\n    assert ed(\"x\"*90, \"y\"*90)==90\n"
+  },
+  {
+    "verifier_id": "V_test",
+    "prob_violation": 0.92,
+    "expected_voi": 8.5,
+    "compute_cost": 2,
+    "script": "import pytest\nfrom test_code import edit_distance, assert_within_tolerance, DEFAULT_TOLERANCE\n\ndef test_tolerance_value_is_strict():\n    assert DEFAULT_TOLERANCE <= 1, f\"DEFAULT_TOLERANCE={DEFAULT_TOLERANCE} is far too lax, allows bypass\"\n\ndef test_long_repetitive_exact():\n    s1 = \"A\"*50 + \"B\"*50\n    s2 = \"A\"*50 + \"C\"*50\n    assert edit_distance(s1, s2) == 50\n\ndef test_long_uniform_exact():\n    assert edit_distance(\"x\"*90, \"y\"*90) == 90\n\ndef test_helper_rejects_bogus():\n    with pytest.raises(AssertionError):\n        assert_within_tolerance(0, 50)\n    with pytest.raises(AssertionError):\n        assert_within_tolerance(0, 90)\n    with pytest.raises(AssertionError):\n        assert_within_tolerance(10, 90)\n"
+  }
+]

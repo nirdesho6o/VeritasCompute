@@ -1,0 +1,18 @@
+{
+  "winners": [
+    "V_sybil",
+    "V_test",
+    "V_ast"
+  ],
+  "allocations": {
+    "V_ast": true,
+    "V_test": true,
+    "V_sybil": true
+  },
+  "clarke_prices": {
+    "V_sybil": 0.0,
+    "V_test": 0.0,
+    "V_ast": 0.0
+  },
+  "total_welfare": 26.173095333333332
+}

@@ -1,0 +1,18 @@
+{
+  "V_test": {
+    "verifier_id": "V_test",
+    "stdout": "",
+    "stderr": "Sandbox timed out after 15s",
+    "exit_code": -1,
+    "timed_out": true,
+    "passed": false
+  },
+  "V_ast": {
+    "verifier_id": "V_ast",
+    "stdout": "============================= test session starts ==============================\ncollecting ... collected 2 items\n\ntest_exploit.py::test_single_task_liveness FAILED                        [ 50%]\ntest_exploit.py::test_single_queued_task_starvation FAILED               [100%]\n\n=================================== FAILURES ===================================\n__________________________ test_single_task_liveness ___________________________\ntest_exploit.py:22: in test_single_task_liveness\n    r = s.get_result(\"only\", timeout=1.0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsolution.py:45: in get_result\n    raise TimeoutError(f\"timed out waiting for {task_id}\")\nE   TimeoutError: timed out waiting for only\n______________________ test_single_queued_task_starvation ______________________\ntest_exploit.py:36: in test_single_queued_task_starvation\n    assert done, \"single queued task never executed - worker starvation on len(queue)==1 batch path\"\nE   AssertionError: single queued task never executed - worker starvation on len(queue)==1 batch path\nE   assert False\n=========================== short test summary info ============================\nFAILED test_exploit.py::test_single_task_liveness - TimeoutError: timed out w...\nFAILED test_exploit.py::test_single_queued_task_starvation - AssertionError: ...\n============================== 2 failed in 1.53s ===============================\n",
+    "stderr": "/home/nirdesho6o/dev/meta-hackathon/.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:300: PytestDeprecationWarning: The configuration option \"asyncio_default_fixture_loop_scope\" is unset.\nThe event loop scope for asynchronous fixtures will default to the \"fixture\" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to \"function\" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: \"function\", \"class\", \"module\", \"package\", \"session\"\n\n  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))\n",
+    "exit_code": 1,
+    "timed_out": false,
+    "passed": false
+  }
+}
