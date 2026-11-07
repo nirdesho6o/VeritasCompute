@@ -1,1 +1,19 @@
 .env
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# Environment
+.env
+
+# Caches
+benchmark/cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store

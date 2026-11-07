@@ -44,4 +44,4 @@ python -m dashboard.api
 ## Screenshot
 
 <!-- Replace with actual screenshot or GIF -->
-![VeritasCompute Control Room](screenshot.png)
+![VeritasCompute Control Room](assets/screenshot.png)
